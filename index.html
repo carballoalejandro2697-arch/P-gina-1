@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recointec – Reparación de Celulares y PC | Tablada, Zona Oeste</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #0057FF;
+    --primary-dark: #003FBB;
+    --accent: #00C2FF;
+    --dark: #0A0F1E;
+    --text: #1A1A2E;
+    --muted: #6B7280;
+    --light: #F4F7FF;
+    --white: #FFFFFF;
+    --border: #E2E8F0;
+    --success: #10B981;
+    --radius: 16px;
+    --shadow: 0 4px 24px rgba(0,87,255,0.10);
+    --shadow-lg: 0 8px 48px rgba(0,87,255,0.16);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--white);
+    overflow-x: hidden;
+  }
+
+  h1,h2,h3,h4 { font-family: 'Syne', sans-serif; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top:0; width:100%; z-index:100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 6%;
+    display: flex; align-items:center; justify-content:space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:800;
+    color: var(--primary); letter-spacing:-0.5px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .nav-logo span { color: var(--dark); }
+  .nav-links { display:flex; gap:28px; list-style:none; }
+  .nav-links a {
+    font-size:.9rem; font-weight:500; color:var(--muted);
+    text-decoration:none; transition:color .2s;
+  }
+  .nav-links a:hover { color:var(--primary); }
+  .nav-cta {
+    background:var(--primary); color:#fff; border:none;
+    padding:10px 22px; border-radius:50px; font-family:'Syne',sans-serif;
+    font-size:.9rem; font-weight:700; cursor:pointer;
+    text-decoration:none; transition:background .2s, transform .1s;
+    display:flex; align-items:center; gap:8px;
+  }
+  .nav-cta:hover { background:var(--primary-dark); transform:translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #F4F7FF 0%, #EBF2FF 50%, #F0FAFF 100%);
+    display:flex; align-items:center;
+    padding: 80px 6% 60px;
+    position:relative; overflow:hidden;
+  }
+  .hero::before {
+    content:'';
+    position:absolute; top:-100px; right:-100px;
+    width:600px; height:600px;
+    background: radial-gradient(circle, rgba(0,87,255,0.08) 0%, transparent 70%);
+    border-radius:50%;
+  }
+  .hero::after {
+    content:'';
+    position:absolute; bottom:-80px; left:10%;
+    width:400px; height:400px;
+    background: radial-gradient(circle, rgba(0,194,255,0.07) 0%, transparent 70%);
+    border-radius:50%;
+  }
+  .hero-content { max-width:600px; position:relative; z-index:2; }
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    background:#fff; border:1px solid var(--border);
+    padding:8px 16px; border-radius:50px;
+    font-size:.82rem; font-weight:500; color:var(--primary);
+    margin-bottom:28px; box-shadow:var(--shadow);
+  }
+  .hero-badge::before {
+    content:''; width:8px; height:8px; border-radius:50%;
+    background:var(--success); flex-shrink:0;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100%{opacity:1;transform:scale(1);}
+    50%{opacity:.6;transform:scale(1.3);}
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight:800; line-height:1.1;
+    color:var(--dark); margin-bottom:20px;
+    letter-spacing:-1px;
+  }
+  .hero h1 em { color:var(--primary); font-style:normal; }
+  .hero p {
+    font-size:1.1rem; color:var(--muted); line-height:1.7;
+    margin-bottom:36px; max-width:480px;
+  }
+  .hero-buttons { display:flex; gap:14px; flex-wrap:wrap; }
+  .btn-primary {
+    background:var(--primary); color:#fff;
+    padding:14px 28px; border-radius:50px;
+    font-family:'Syne',sans-serif; font-weight:700; font-size:1rem;
+    text-decoration:none; transition:all .2s;
+    display:flex; align-items:center; gap:10px;
+    box-shadow: 0 4px 20px rgba(0,87,255,0.3);
+  }
+  .btn-primary:hover { background:var(--primary-dark); transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,87,255,0.4); }
+  .btn-secondary {
+    background:transparent; color:var(--primary);
+    padding:14px 28px; border-radius:50px; border:2px solid var(--primary);
+    font-family:'Syne',sans-serif; font-weight:700; font-size:1rem;
+    text-decoration:none; transition:all .2s;
+  }
+  .btn-secondary:hover { background:var(--primary); color:#fff; }
+
+  .hero-stats {
+    display:flex; gap:32px; margin-top:48px; padding-top:36px;
+    border-top:1px solid var(--border); flex-wrap:wrap;
+  }
+  .stat-item h3 { font-size:1.8rem; font-weight:800; color:var(--primary); }
+  .stat-item p { font-size:.85rem; color:var(--muted); margin-top:2px; }
+
+  /* ── SECTIONS BASE ── */
+  section { padding:80px 6%; }
+  .section-tag {
+    font-size:.8rem; font-weight:700; letter-spacing:2px;
+    text-transform:uppercase; color:var(--primary);
+    margin-bottom:12px; display:block;
+  }
+  .section-title {
+    font-size:clamp(1.8rem,3.5vw,2.6rem); font-weight:800;
+    color:var(--dark); line-height:1.15; letter-spacing:-.5px;
+    margin-bottom:16px;
+  }
+  .section-sub { font-size:1rem; color:var(--muted); max-width:560px; line-height:1.7; }
+
+  /* ── SERVICIOS ── */
+  #servicios { background:#fff; }
+  .services-grid {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:24px; margin-top:48px;
+  }
+  .service-card {
+    background:var(--light); border:1px solid var(--border);
+    border-radius:var(--radius); padding:32px;
+    transition:all .25s; cursor:default;
+  }
+  .service-card:hover {
+    border-color:var(--primary); box-shadow:var(--shadow-lg);
+    transform:translateY(-4px);
+  }
+  .service-icon {
+    width:56px; height:56px; background:var(--primary);
+    border-radius:14px; display:flex; align-items:center; justify-content:center;
+    font-size:1.6rem; margin-bottom:20px;
+  }
+  .service-card h3 {
+    font-size:1.15rem; font-weight:700; color:var(--dark); margin-bottom:10px;
+  }
+  .service-card p { font-size:.9rem; color:var(--muted); line-height:1.6; }
+  .service-list { margin-top:16px; list-style:none; }
+  .service-list li {
+    font-size:.85rem; color:var(--muted); padding:5px 0;
+    border-bottom:1px solid var(--border);
+    display:flex; align-items:center; gap:8px;
+  }
+  .service-list li:last-child { border-bottom:none; }
+  .service-list li::before { content:'✓'; color:var(--success); font-weight:700; flex-shrink:0; }
+
+  /* ── PRESUPUESTO ONLINE ── */
+  #presupuesto { background:var(--light); }
+  .quote-container {
+    max-width:680px; margin:48px auto 0;
+    background:#fff; border-radius:var(--radius);
+    border:1px solid var(--border); overflow:hidden;
+    box-shadow:var(--shadow-lg);
+  }
+  .quote-header {
+    background:var(--primary); padding:28px 36px; color:#fff;
+  }
+  .quote-header h3 { font-size:1.3rem; font-weight:700; }
+  .quote-header p { font-size:.9rem; opacity:.85; margin-top:4px; }
+  .quote-body { padding:36px; }
+  .form-group { margin-bottom:20px; }
+  .form-group label {
+    display:block; font-size:.85rem; font-weight:600;
+    color:var(--dark); margin-bottom:8px;
+  }
+  .form-group select, .form-group input, .form-group textarea {
+    width:100%; padding:12px 16px; border-radius:10px;
+    border:1.5px solid var(--border); font-family:'DM Sans',sans-serif;
+    font-size:.95rem; color:var(--text); background:#fff;
+    transition:border-color .2s; outline:none;
+  }
+  .form-group select:focus, .form-group input:focus, .form-group textarea:focus {
+    border-color:var(--primary);
+  }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  #precio-estimado {
+    background:var(--light); border-radius:12px; padding:20px 24px;
+    margin-bottom:20px; border:1px solid var(--border);
+    display:none;
+  }
+  #precio-estimado h4 { font-size:.85rem; color:var(--muted); }
+  #precio-estimado .precio-valor { font-size:1.8rem; font-weight:800; color:var(--primary); }
+  #precio-estimado .precio-nota { font-size:.8rem; color:var(--muted); margin-top:4px; }
+  .btn-whatsapp {
+    width:100%; background:#25D366; color:#fff;
+    border:none; padding:15px; border-radius:50px;
+    font-family:'Syne',sans-serif; font-weight:700; font-size:1rem;
+    cursor:pointer; transition:all .2s;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+  }
+  .btn-whatsapp:hover { background:#1ebe59; transform:translateY(-1px); }
+
+  /* ── GALERÍA ── */
+  #galeria { background:#fff; }
+  .gallery-grid {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:16px; margin-top:48px;
+  }
+  .gallery-item {
+    border-radius:var(--radius); overflow:hidden;
+    aspect-ratio:4/3; background:var(--light);
+    border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    position:relative; cursor:pointer;
+    transition:transform .25s, box-shadow .25s;
+  }
+  .gallery-item:hover { transform:scale(1.03); box-shadow:var(--shadow-lg); }
+  .gallery-item img { width:100%; height:100%; object-fit:cover; }
+  .gallery-label {
+    position:absolute; bottom:0; left:0; right:0;
+    background:linear-gradient(transparent,rgba(10,15,30,.7));
+    color:#fff; font-size:.8rem; font-weight:600;
+    padding:20px 12px 10px;
+  }
+
+  /* ── ZONA DE COBERTURA ── */
+  #cobertura { background:var(--light); }
+  .coverage-layout {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:48px; align-items:start; margin-top:48px;
+  }
+  .zones-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  }
+  .zone-chip {
+    background:#fff; border:1.5px solid var(--border);
+    border-radius:50px; padding:10px 18px;
+    font-size:.9rem; font-weight:500; color:var(--dark);
+    text-align:center; transition:all .2s;
+  }
+  .zone-chip.active {
+    background:var(--primary); color:#fff; border-color:var(--primary);
+  }
+  .zone-chip:hover { border-color:var(--primary); color:var(--primary); }
+  .map-placeholder {
+    background:#fff; border-radius:var(--radius);
+    border:1px solid var(--border); overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .map-placeholder iframe {
+    width:100%; height:340px; border:none; display:block;
+  }
+  .address-card {
+    background:#fff; border-radius:var(--radius);
+    border:1px solid var(--border); padding:24px;
+    margin-top:16px; box-shadow:var(--shadow);
+  }
+  .address-card h4 { font-size:1rem; font-weight:700; color:var(--dark); margin-bottom:8px; }
+  .address-card p { font-size:.9rem; color:var(--muted); line-height:1.6; }
+
+  /* ── FAQ ── */
+  #faq { background:#fff; }
+  .faq-list { max-width:720px; margin:48px auto 0; }
+  .faq-item {
+    border:1px solid var(--border); border-radius:var(--radius);
+    margin-bottom:12px; overflow:hidden; transition:border-color .2s;
+  }
+  .faq-item.open { border-color:var(--primary); }
+  .faq-question {
+    width:100%; background:transparent; border:none;
+    padding:20px 24px; text-align:left; cursor:pointer;
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'Syne',sans-serif; font-size:1rem; font-weight:600;
+    color:var(--dark); transition:color .2s;
+  }
+  .faq-item.open .faq-question { color:var(--primary); }
+  .faq-arrow {
+    width:28px; height:28px; border-radius:50%;
+    background:var(--light); display:flex; align-items:center; justify-content:center;
+    font-size:1rem; transition:transform .3s, background .2s; flex-shrink:0;
+  }
+  .faq-item.open .faq-arrow { transform:rotate(180deg); background:var(--primary); color:#fff; }
+  .faq-answer {
+    max-height:0; overflow:hidden; transition:max-height .35s ease, padding .3s;
+    padding:0 24px; font-size:.93rem; color:var(--muted); line-height:1.7;
+  }
+  .faq-item.open .faq-answer { max-height:300px; padding:0 24px 20px; }
+
+  /* ── CONTACTO ── */
+  #contacto {
+    background: linear-gradient(135deg, var(--dark) 0%, #0A2560 100%);
+    color:#fff;
+  }
+  #contacto .section-tag { color:var(--accent); }
+  #contacto .section-title { color:#fff; }
+  #contacto .section-sub { color:rgba(255,255,255,.65); }
+  .contact-grid {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:48px; margin-top:48px; align-items:start;
+  }
+  .contact-card {
+    background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12);
+    border-radius:var(--radius); padding:28px;
+    display:flex; align-items:flex-start; gap:18px;
+    transition:background .2s;
+  }
+  .contact-card:hover { background:rgba(255,255,255,.12); }
+  .contact-icon {
+    width:48px; height:48px; border-radius:12px;
+    background:var(--primary); display:flex; align-items:center;
+    justify-content:center; font-size:1.3rem; flex-shrink:0;
+  }
+  .contact-info h4 { font-size:1rem; font-weight:700; color:#fff; margin-bottom:4px; }
+  .contact-info p, .contact-info a {
+    font-size:.9rem; color:rgba(255,255,255,.6); text-decoration:none;
+    line-height:1.6;
+  }
+  .contact-info a:hover { color:var(--accent); }
+  .contact-cards { display:flex; flex-direction:column; gap:14px; }
+  .whatsapp-big {
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    background:#25D366; color:#fff; text-decoration:none;
+    border-radius:var(--radius); padding:28px;
+    font-family:'Syne',sans-serif; font-weight:800; font-size:1.4rem;
+    transition:all .25s; box-shadow:0 8px 32px rgba(37,211,102,.3);
+  }
+  .whatsapp-big:hover { background:#1ebe59; transform:translateY(-3px); box-shadow:0 12px 40px rgba(37,211,102,.4); }
+  .whatsapp-big span { font-size:2.2rem; }
+  .whatsapp-sub { font-size:.85rem; font-weight:400; opacity:.85; margin-top:2px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background:#060B18; color:rgba(255,255,255,.4);
+    text-align:center; padding:24px 6%;
+    font-size:.85rem;
+  }
+  footer strong { color:rgba(255,255,255,.7); }
+
+  /* ── MOBILE ── */
+  @media(max-width:768px){
+    nav { padding:0 4%; }
+    .nav-links { display:none; }
+    .hero { padding:100px 5% 60px; }
+    .hero-stats { gap:20px; }
+    section { padding:60px 5%; }
+    .coverage-layout, .contact-grid { grid-template-columns:1fr; gap:28px; }
+    .form-row { grid-template-columns:1fr; }
+    .gallery-grid { grid-template-columns:repeat(2,1fr); }
+    .zones-grid { grid-template-columns:1fr 1fr; }
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-in {
+    opacity:0; transform:translateY(24px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .fade-in.visible { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">🔧 Recoin<span>tec</span></div>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#presupuesto">Presupuesto</a></li>
+    <li><a href="#galeria">Trabajos</a></li>
+    <li><a href="#cobertura">Cobertura</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="https://wa.me/5491176444024" target="_blank" class="nav-cta">
+    💬 WhatsApp
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Servicio técnico certificado · Zona Oeste</div>
+    <h1>Reparamos tu<br><em>celular y PC</em><br>en Tablada</h1>
+    <p>Cambio de módulo, pantallas, baterías, reparación de placa y mucho más. Presupuesto sin cargo. Atención personalizada en Zona Oeste.</p>
+    <div class="hero-buttons">
+      <a href="https://wa.me/5491176444024" target="_blank" class="btn-primary">💬 Consultar por WhatsApp</a>
+      <a href="#presupuesto" class="btn-secondary">Ver precios</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><h3>+500</h3><p>Equipos reparados</p></div>
+      <div class="stat-item"><h3>24hs</h3><p>Entrega express</p></div>
+      <div class="stat-item"><h3>100%</h3><p>Garantía en repuestos</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <span class="section-tag">Lo que hacemos</span>
+  <h2 class="section-title">Servicios de reparación</h2>
+  <p class="section-sub">Trabajamos con todas las marcas y modelos. Diagnóstico gratuito en todos los casos.</p>
+
+  <div class="services-grid">
+    <div class="service-card fade-in">
+      <div class="service-icon">📱</div>
+      <h3>Celulares</h3>
+      <p>Reparación integral de smartphones de todas las marcas y modelos.</p>
+      <ul class="service-list">
+        <li>Cambio de módulo / pantalla</li>
+        <li>Cambio de batería</li>
+        <li>Reparación de carga</li>
+        <li>Flasheo y software</li>
+        <li>Diagnóstico de placa</li>
+        <li>Samsung, Motorola, Xiaomi, iPhone</li>
+      </ul>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon">🖥️</div>
+      <h3>Computadoras y PC</h3>
+      <p>Servicio técnico completo para PCs de escritorio, notebooks y all-in-one.</p>
+      <ul class="service-list">
+        <li>Limpieza y mantenimiento</li>
+        <li>Cambio de disco / SSD</li>
+        <li>Actualización de RAM</li>
+        <li>Reinstalación de Windows</li>
+        <li>Reparación de motherboard</li>
+        <li>Armado de PC gamer</li>
+      </ul>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon">🔋</div>
+      <h3>Tablets y accesorios</h3>
+      <p>Reparación de tablets, cargadores, auriculares y más dispositivos electrónicos.</p>
+      <ul class="service-list">
+        <li>Cambio de pantalla tablet</li>
+        <li>Cambio de batería</li>
+        <li>Reparación de carga</li>
+        <li>BMS de batería</li>
+      </ul>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon">⚡</div>
+      <h3>Urgencias y Express</h3>
+      <p>¿Lo necesitás para hoy? Servicio express con entrega el mismo día según disponibilidad.</p>
+      <ul class="service-list">
+        <li>Cambio de módulo en el día</li>
+        <li>Recupero de datos</li>
+        <li>Desbloqueo de equipos</li>
+        <li>Consulta sin turno</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PRESUPUESTO ONLINE -->
+<section id="presupuesto">
+  <span class="section-tag">Cotizá ahora</span>
+  <h2 class="section-title">Presupuesto online</h2>
+  <p class="section-sub">Completá el formulario y te enviamos el presupuesto por WhatsApp sin cargo.</p>
+
+  <div class="quote-container fade-in">
+    <div class="quote-header">
+      <h3>🔧 Calculá el precio de tu reparación</h3>
+      <p>Estimación orientativa · Presupuesto definitivo sin cargo</p>
+    </div>
+    <div class="quote-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Tipo de equipo</label>
+          <select id="tipo-equipo" onchange="calcularPrecio()">
+            <option value="">Seleccioná...</option>
+            <option value="celular">Celular</option>
+            <option value="tablet">Tablet</option>
+            <option value="pc">PC / Notebook</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Marca</label>
+          <select id="marca" onchange="calcularPrecio()">
+            <option value="">Seleccioná...</option>
+            <option value="samsung">Samsung</option>
+            <option value="motorola">Motorola</option>
+            <option value="xiaomi">Xiaomi</option>
+            <option value="iphone">iPhone</option>
+            <option value="otra">Otra marca</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Modelo (ej: Samsung A54, Moto G84...)</label>
+        <input type="text" id="modelo" placeholder="Escribí el modelo de tu equipo" oninput="calcularPrecio()">
+      </div>
+      <div class="form-group">
+        <label>Tipo de reparación</label>
+        <select id="reparacion" onchange="calcularPrecio()">
+          <option value="">Seleccioná...</option>
+          <option value="modulo" data-precio="8000-20000">Cambio de módulo / pantalla</option>
+          <option value="bateria" data-precio="3500-8000">Cambio de batería</option>
+          <option value="carga" data-precio="2000-5000">Reparación de carga</option>
+          <option value="software" data-precio="2500-5000">Flasheo / software</option>
+          <option value="limpieza" data-precio="1500-3000">Limpieza y mantenimiento</option>
+          <option value="placa" data-precio="Consultar">Reparación de placa</option>
+          <option value="datos" data-precio="Consultar">Recupero de datos</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tu nombre</label>
+        <input type="text" id="nombre" placeholder="¿Cómo te llamás?">
+      </div>
+
+      <div id="precio-estimado">
+        <h4>Precio estimado</h4>
+        <div class="precio-valor" id="precio-valor">—</div>
+        <div class="precio-nota">* Precio orientativo en pesos. El presupuesto definitivo es sin cargo.</div>
+      </div>
+
+      <button class="btn-whatsapp" onclick="enviarPresupuesto()">
+        <span>💬</span> Enviar consulta por WhatsApp
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- GALERÍA -->
+<section id="galeria">
+  <span class="section-tag">Nuestros trabajos</span>
+  <h2 class="section-title">Galería de reparaciones</h2>
+  <p class="section-sub">Algunos de los equipos que pasaron por nuestro taller.</p>
+
+  <div class="gallery-grid">
+    <div class="gallery-item fade-in">
+      <img src="/mnt/user-data/uploads/209544.jpg" alt="Reparación pantalla" onerror="this.parentElement.innerHTML='<div style=\'padding:20px;text-align:center;color:var(--muted)\'>📱<br>Pantalla backlight</div>'">
+      <div class="gallery-label">Diagnóstico display</div>
+    </div>
+    <div class="gallery-item fade-in">
+      <img src="/mnt/user-data/uploads/209531.jpg" alt="Samsung error" onerror="this.parentElement.innerHTML='<div style=\'padding:20px;text-align:center;color:var(--muted)\'>📱<br>Samsung error</div>'">
+      <div class="gallery-label">Samsung – Flasheo</div>
+    </div>
+    <div class="gallery-item fade-in">
+      <img src="/mnt/user-data/uploads/198590.jpg" alt="PC interior" onerror="this.parentElement.innerHTML='<div style=\'padding:20px;text-align:center;color:var(--muted)\'>🖥️<br>PC interior</div>'">
+      <div class="gallery-label">PC – Limpieza</div>
+    </div>
+    <div class="gallery-item fade-in">
+      <img src="/mnt/user-data/uploads/198144.jpg" alt="CPU fan limpieza" onerror="this.parentElement.innerHTML='<div style=\'padding:20px;text-align:center;color:var(--muted)\'>🌀<br>Limpieza cooler</div>'">
+      <div class="gallery-label">Limpieza de cooler</div>
+    </div>
+    <div class="gallery-item fade-in">
+      <img src="/mnt/user-data/uploads/195852.jpg" alt="Bateria tablet" onerror="this.parentElement.innerHTML='<div style=\'padding:20px;text-align:center;color:var(--muted)\'>🔋<br>Batería</div>'">
+      <div class="gallery-label">Batería tablet + BMS</div>
+    </div>
+    <div class="gallery-item fade-in">
+      <img src="/mnt/user-data/uploads/190382.jpg" alt="PC Gamer" onerror="this.parentElement.innerHTML='<div style=\'padding:20px;text-align:center;color:var(--muted)\'>🖥️<br>PC Gamer</div>'">
+      <div class="gallery-label">Armado PC Gamer RGB</div>
+    </div>
+    <div class="gallery-item fade-in">
+      <img src="/mnt/user-data/uploads/189887.jpg" alt="Motorola pantalla" onerror="this.parentElement.innerHTML='<div style=\'padding:20px;text-align:center;color:var(--muted)\'>📱<br>Motorola</div>'">
+      <div class="gallery-label">Motorola – Test display</div>
+    </div>
+    <div class="gallery-item fade-in">
+      <img src="/mnt/user-data/uploads/193839.jpg" alt="Motorola bateria" onerror="this.parentElement.innerHTML='<div style=\'padding:20px;text-align:center;color:var(--muted)\'>🔋<br>Batería Moto</div>'">
+      <div class="gallery-label">Motorola – Cambio batería</div>
+    </div>
+  </div>
+</section>
+
+<!-- COBERTURA -->
+<section id="cobertura">
+  <span class="section-tag">Dónde estamos</span>
+  <h2 class="section-title">Zona de cobertura</h2>
+  <p class="section-sub">Estamos en Tablada y trabajamos en toda la Zona Oeste del GBA.</p>
+
+  <div class="coverage-layout">
+    <div>
+      <div class="zones-grid">
+        <div class="zone-chip active">📍 Tablada</div>
+        <div class="zone-chip">Ramos Mejía</div>
+        <div class="zone-chip">San Justo</div>
+        <div class="zone-chip">Lomas del Mirador</div>
+        <div class="zone-chip">Isidro Casanova</div>
+        <div class="zone-chip">González Catán</div>
+        <div class="zone-chip">Aldo Bonzi</div>
+        <div class="zone-chip">La Tablada</div>
+      </div>
+      <div class="address-card" style="margin-top:24px">
+        <h4>📍 Dirección del taller</h4>
+        <p>Mariano Moreno 3963<br>Tablada, La Matanza<br>Provincia de Buenos Aires</p>
+        <p style="margin-top:12px">
+          <strong>📞 WhatsApp:</strong> <a href="https://wa.me/5491176444024" target="_blank" style="color:var(--primary)">11-7644-4024</a>
+        </p>
+        <p style="margin-top:6px">
+          <strong>🕐 Horario:</strong> Lunes a Sábado 9:00 – 19:00
+        </p>
+      </div>
+    </div>
+    <div>
+      <div class="map-placeholder">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.5!2d-58.5566!3d-34.6669!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDQwJzAwLjgiUyA1OMKwMzMnMjMuOCJX!5e0!3m2!1ses!2sar!4v1"
+          allowfullscreen loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <span class="section-tag">Preguntas frecuentes</span>
+  <h2 class="section-title">FAQ</h2>
+  <p class="section-sub">Todo lo que necesitás saber antes de traer tu equipo.</p>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        ¿Cuánto tarda una reparación?
+        <span class="faq-arrow">▾</span>
+      </button>
+      <div class="faq-answer">
+        La mayoría de las reparaciones se realizan en el día. El cambio de módulo o batería suele tardar entre 1 y 3 horas. Reparaciones de placa o diagnósticos complejos pueden llevar 24 a 48hs.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        ¿El diagnóstico tiene costo?
+        <span class="faq-arrow">▾</span>
+      </button>
+      <div class="faq-answer">
+        No. El diagnóstico es completamente gratuito y sin cargo. Solo pagás si decidís seguir con la reparación.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        ¿Los repuestos tienen garantía?
+        <span class="faq-arrow">▾</span>
+      </button>
+      <div class="faq-answer">
+        Sí. Todos los repuestos que instalamos tienen garantía mínima de 30 días. Módulos premium pueden tener hasta 90 días de garantía.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        ¿Qué pasa si no se puede reparar?
+        <span class="faq-arrow">▾</span>
+      </button>
+      <div class="faq-answer">
+        Si el equipo no tiene reparación viable, te lo informamos sin cargo y te asesoramos sobre las alternativas. Nunca te cobramos si no hay solución.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        ¿Puedo mandar el equipo por envío?
+        <span class="faq-arrow">▾</span>
+      </button>
+      <div class="faq-answer">
+        Sí. Coordinamos envíos dentro de Zona Oeste y a todo el GBA. Consultar por WhatsApp para organizar el retiro o entrega.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        ¿Trabajan con Samsung con ODIN o errores de flash?
+        <span class="faq-arrow">▾</span>
+      </button>
+      <div class="faq-answer">
+        Sí. Tenemos experiencia en flasheo de Samsung con ODIN, solución de errores mmc_read, download mode, y recuperación de equipos brickeados.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        ¿Aceptan todos los medios de pago?
+        <span class="faq-arrow">▾</span>
+      </button>
+      <div class="faq-answer">
+        Aceptamos efectivo, transferencia bancaria y MercadoPago. Consultá por cuotas para reparaciones de mayor valor.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <span class="section-tag">Contacto</span>
+  <h2 class="section-title">Hablá con nosotros</h2>
+  <p class="section-sub">Respondemos todos los días. La forma más rápida es WhatsApp.</p>
+
+  <div class="contact-grid">
+    <div>
+      <a href="https://wa.me/5491176444024" target="_blank" class="whatsapp-big">
+        <span>💬</span>
+        <div>
+          <div>11-7644-4024</div>
+          <div class="whatsapp-sub">Escribinos ahora · Respuesta rápida</div>
+        </div>
+      </a>
+    </div>
+    <div class="contact-cards">
+      <div class="contact-card">
+        <div class="contact-icon">📍</div>
+        <div class="contact-info">
+          <h4>Dirección</h4>
+          <p>Mariano Moreno 3963<br>Tablada, La Matanza, Buenos Aires</p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🕐</div>
+        <div class="contact-info">
+          <h4>Horario de atención</h4>
+          <p>Lunes a Viernes: 9:00 – 19:00<br>Sábados: 9:00 – 14:00</p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🗺️</div>
+        <div class="contact-info">
+          <h4>Zona de cobertura</h4>
+          <p>Tablada · Ramos Mejía · San Justo<br>Toda la Zona Oeste del GBA</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <strong>Recointec</strong> · Mariano Moreno 3963, Tablada · WhatsApp: <strong>11-7644-4024</strong></p>
+  <p style="margin-top:6px">Reparación de celulares y PC en Zona Oeste · Tablada · Ramos Mejía · San Justo</p>
+</footer>
+
+<script>
+// FAQ Toggle
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// Presupuesto
+function calcularPrecio() {
+  const tipo = document.getElementById('tipo-equipo').value;
+  const rep = document.getElementById('reparacion');
+  const sel = rep.options[rep.selectedIndex];
+  const el = document.getElementById('precio-estimado');
+  const val = document.getElementById('precio-valor');
+
+  if (tipo && sel.dataset.precio) {
+    el.style.display = 'block';
+    const p = sel.dataset.precio;
+    val.textContent = p === 'Consultar' ? 'Consultar' : '$' + p;
+  } else {
+    el.style.display = 'none';
+  }
+}
+
+function enviarPresupuesto() {
+  const tipo = document.getElementById('tipo-equipo').value || 'No especificado';
+  const marca = document.getElementById('marca').value || 'No especificado';
+  const modelo = document.getElementById('modelo').value || 'No especificado';
+  const rep = document.getElementById('reparacion');
+  const reparacion = rep.options[rep.selectedIndex].text || 'No especificada';
+  const nombre = document.getElementById('nombre').value || 'Cliente';
+
+  const msg = encodeURIComponent(
+    `Hola Recointec! 👋\n\n` +
+    `*Solicito presupuesto:*\n` +
+    `• Nombre: ${nombre}\n` +
+    `• Equipo: ${tipo}\n` +
+    `• Marca: ${marca}\n` +
+    `• Modelo: ${modelo}\n` +
+    `• Reparación: ${reparacion}\n\n` +
+    `Aguardo respuesta. ¡Gracias!`
+  );
+  window.open(`https://wa.me/5491176444024?text=${msg}`, '_blank');
+}
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
